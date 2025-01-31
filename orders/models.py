@@ -27,3 +27,5 @@ class Order(models.Model):
 
     def __str__(self):
         return f"<Order {self.size} by {self.customer.id}."
+
+
