@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, IsAdminUser
 
 from . import serializers
 from .models import Order
@@ -22,7 +22,7 @@ class OrderCreateListView(generics.GenericAPIView):
 
     serializer_class = serializers.OrderCreationSerializer
     queryset = Order.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request):
 
@@ -48,7 +48,7 @@ class OrderCreateListView(generics.GenericAPIView):
 # view for updating, deleting and getting one order
 class OrderDetailView(generics.GenericAPIView):
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUser]
     serializer_class = serializers.OrderDetailSerializer
     def get(self, request, order_id):
         
@@ -83,7 +83,7 @@ class OrderDetailView(generics.GenericAPIView):
 class UpdateOrderStatusView(generics.GenericAPIView):
 
     serializer_class = serializers.OrderStatusUpdateSerializer
-
+    permission_classes = [IsAdminUser]
     # updating order status
     def put(self, request, order_id):
         order = get_object_or_404(Order, pk=order_id)
