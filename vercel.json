@@ -2,14 +2,14 @@
     "version": 2,
     "builds": [
       {
-        "src": "pizza_delivery/asgi.py",
+        "src": "pizza_delivery/wsgi.py",
         "use": "@vercel/python"
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "pizza_delivery/asgi.py"
+        "dest": "pizza_delivery/wsgi.py"
       }
     ]
   }
